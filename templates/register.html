@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+<body>
+    <h1>Register</h1>
+    <form action="/register" method="POST" enctype="multipart/form-data">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" value="{{ request.args.get('name', '') }}" required>
+        <label for="profile_pic" class="upload-button">Set Profile Picture</label>
+        <input type="file" id="profile_pic" name="profile_pic" required class="file-input">
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home {{ user_data.NAME }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Hi My Name Is {{ user_data.NAME }}</h1>
+    <h1>And This Is My First Drink!</h1>
+    <div class="centered">
+        <img src="{{ user_data.PROFILEPICTURE_PATH }}" alt="PFP" class="user-pfp">
+    </div>
+
+    <h2>What's Your Drink?</h2>
+    <form action="/main" method="POST" enctype="multipart/form-data">
+        <label for="photo" class="upload-button">Upload Picture</label>
+        <input type="file" id="photo" name="photo" required class="file-input">
+        <div class="button-group">
+            <button type="submit" name="drink_type" value="drink" class="drink-button">Drink</button>
+            <button type="submit" name="drink_type" value="shot" class="drink-button">Shot</button>
+        </div>
+    </form>
+
+    <h2>The Most Drunk (Total Score)</h2>
+    {% if top_user %}
+    <div class="user">
+        <div class="user-info">
+            <strong class="user-name">{{ top_user.NAME }}</strong> 
+            <span class="user-drinks">{{ top_user.SCORE }} Points ({{ top_user.DRINKS }} Drinks, {{ top_user.SHOTS }} Shots)</span>
+        </div>
+        <img src="{{ top_user.PROFILEPICTURE_PATH }}" alt="Picture Of {{ top_user.NAME }}" class="user-image">
+    </div>
+    {% else %}
+    <p>There Are No Registered Users.</p>
+    {% endif %}
+
+    <h1>Leaderboard</h1>
+
+    <div id="leaderboard">
+        {% for user_id, user in scoreboard.items() %}
+        <div class="user" data-user-id="{{ user_id }}">
+            <div class="user-info">
+                <span class="user-name">{{ loop.index }}. {{ user.NAME }}</span>
+                <span class="user-drinks">{{ user.SCORE }} Points ({{ user.DRINKS }} Drinks, {{ user.SHOTS }} Shots)</span>
+            </div>
+            <img src="{{ user.PROFILEPICTURE_PATH }}" alt="Profile Picture Of {{ user.NAME }}" class="user-image">
+        </div>
+        {% endfor %}
+    </div>
+    
+    <script>
+        // Agregar evento de clic para redirigir a la página de bebidas del usuario
+        document.querySelectorAll('.user').forEach(userElement => {
+            userElement.addEventListener('click', () => {
+                const userId = userElement.getAttribute('data-user-id');
+                if (userId) {
+                    window.location.href = `/user/${userId}/drinks`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

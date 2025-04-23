@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+<body>
+    <h1>Hi My Name Is <span id="username">____</span><br> And This Is My First Drink</h1>
+    <form action="/login" method="POST">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required oninput="updateUsername()">
+        <button type="submit">Iniciar Sesión</button>
+    </form>
+
+    <script>
+        function updateUsername() {
+            const name = document.getElementById("name").value;
+            document.getElementById("username").innerText = name || '____';
+        }
+    </script>
+</body>
+</html>

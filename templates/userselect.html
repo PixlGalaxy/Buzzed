@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Usuario</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+<body>
+    <h1>Select Your Profile...</h1>
+    <div class="user-select-container">
+        {% for user_id, user in users %}
+            <div class="user-card">
+                <a href="{{ url_for('user_select_action', user_id=user_id) }}">
+                    <!-- Genera la URL correcta para las imágenes -->
+                    <img src="{{ '/' + user.PROFILEPICTURE_PATH }}" alt="PFP Of {{ user['NAME'] }}" class="profile-pic">
+                    <p>{{ user['NAME'] }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

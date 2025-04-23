@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.NAME }}'s Drinks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+<body>
+    <h1>Hi, My Name Is {{ user.NAME }}</h1>
+    <h1>And These Are My Drinks!</h1>
+
+    <!-- Mostrar la imagen del perfil del usuario -->
+    <div class="centered">
+        <img src="{{ url_for('static', filename=profile_picture_path) }}" alt="Profile Picture Of {{ user.NAME }}" class="user-pfp">
+    </div>
+    
+    <!-- Información de bebidas -->
+    <h2>Statistics</h2>
+    <div class="stats-container">
+        <div class="stat-item">
+            <strong>Total Drinks:</strong> {{ user.DRINKS }}
+        </div>
+        <div class="stat-item">
+            <strong>Total Shots:</strong> {{ user.SHOTS }}
+        </div>
+        <div class="stat-item">
+            <strong>Total Score:</strong> {{ user.SCORE }}
+        </div>
+    </div>
+
+    <!-- Mostrar las fotos de bebidas subidas por el usuario -->
+    <h2>Uploaded Drinks</h2>
+    <div class="photo-gallery">
+        {% for photo in user_photos %}
+        <div class="photo-item">
+            <img src="{{ url_for('static', filename=photo) }}" alt="Drink Photo" class="drink-photo">
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Botón para regresar -->
+    <div class="back-container">
+        <a href="{{ url_for('main_page') }}" class="back-button">Back</a>
+    </div>
+    
+</body>
+</html>
